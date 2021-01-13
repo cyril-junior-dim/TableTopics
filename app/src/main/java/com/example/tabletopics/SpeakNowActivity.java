@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class SpeakNowActivity extends AppCompatActivity {
+
+    private String theme = "";
     private Spinner spinner;
     private Spinner spinner2;
     private Spinner spinner3;
@@ -96,11 +99,24 @@ public class SpeakNowActivity extends AppCompatActivity {
 
         spinner3.setAdapter(adapter3);
 
+        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                theme = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         Button button = (Button)findViewById(R.id.start);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), LoadingScreenActivity.class);
+                intent.putExtra("theme", theme);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
