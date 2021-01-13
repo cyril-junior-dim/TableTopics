@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "857171021959",
+    "project_id": "tabletopics-f5a99",
+    "storage_bucket": "tabletopics-f5a99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857171021959:android:4426fd92d12d25404a6822",
+        "android_client_info": {
+          "package_name": "com.example.tabletopics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857171021959-sl4kegdikf8nanjddo7ev6riqq4td69i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitIjxDSe0jiskvf0D76hvo-8e9B9jyT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857171021959-sl4kegdikf8nanjddo7ev6riqq4td69i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

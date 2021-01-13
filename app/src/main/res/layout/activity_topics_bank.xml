@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#055DA3"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="677dp"
+        android:fadeScrollbars="true"
+        android:fadingEdge="vertical"
+        android:fillViewport="true"
+        android:paddingTop="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+
+
+        <TableLayout
+            android:id="@+id/topicsTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="25sp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="15sp">
+
+                <Button
+                    android:id="@+id/fantasy"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#282E6A"
+                    android:tag="Fantasy"
+                    android:text="@string/fantasy"
+                    android:textColor="@color/white"
+                    android:translationX="-7.5sp" />
+
+                <Button
+                    android:id="@+id/contests"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#000000"
+                    android:tag="Contests"
+                    android:text="@string/contests"
+                    android:textColor="@color/white"
+                    android:translationX="7.5sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="15sp">
+
+                <Button
+                    android:id="@+id/technology"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#A21EBA"
+                    android:tag="Technology"
+                    android:text="@string/technology"
+                    android:textColor="@color/white"
+                    android:translationX="-7.5sp" />
+
+                <Button
+                    android:id="@+id/sport"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#CC580C"
+                    android:tag="Sport"
+                    android:text="@string/sport"
+                    android:textColor="@color/white"
+                    android:translationX="7.5sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="15sp">
+
+                <Button
+                    android:id="@+id/comedy"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#FFC700"
+                    android:tag="Comedy"
+                    android:text="@string/comedy"
+                    android:textColor="@color/white"
+                    android:translationX="-7.5sp" />
+
+                <Button
+                    android:id="@+id/love"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#950505"
+                    android:tag="Love"
+                    android:text="@string/love"
+                    android:textColor="@color/white"
+                    android:translationX="7.5sp" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="15sp">
+
+                <Button
+                    android:id="@+id/travel"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#6EC82E"
+                    android:tag="Travel"
+                    android:text="@string/travel"
+                    android:textColor="@color/white"
+                    android:translationX="-7.5sp" />
+
+                <Button
+                    android:id="@+id/current_affairs"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#13BED5"
+                    android:tag="Current Affairs"
+                    android:text="@string/current_affairs"
+                    android:textColor="@color/white"
+                    android:translationX="7.5sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="15sp">
+
+                <Button
+                    android:id="@+id/history"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#714B4B"
+                    android:tag="History"
+                    android:text="@string/history"
+                    android:textColor="@color/white"
+                    android:translationX="-7.5sp" />
+
+                <Button
+                    android:id="@+id/other"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#323232"
+                    android:tag="Popular"
+                    android:text="@string/other"
+                    android:textColor="@color/white"
+                    android:translationX="7.5sp" />
+
+
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

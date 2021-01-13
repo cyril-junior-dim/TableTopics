@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".SpeakNowActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#055DA3"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="75sp"
+            android:paddingBottom="25sp">
+
+            <TextView
+                android:id="@+id/settings_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                android:textColor="#000000"
+                android:textSize="32sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="195dp"
+                android:layout_height="28dp"
+                android:paddingRight="10sp"
+                android:text="@string/minimum_time"
+                android:textColor="#000000"
+                android:textSize="23sp"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/minTimeSpinner"
+                android:layout_width="75dp"
+                android:layout_height="37dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center"
+                tools:ignore="MissingConstraints" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/maximum_time"
+                android:textColor="#000000"
+                android:textSize="23sp" />
+
+            <Spinner
+                android:id="@+id/maxTimeSpinner"
+                android:layout_width="10dp"
+                android:layout_height="37dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24sp"
+                android:layout_marginRight="24sp"
+                android:text="@string/record_audio"
+                android:textColor="#000000"
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/maxTimeSpinner" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="79dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="-25sp"
+                android:layout_marginLeft="-25sp"
+                android:layout_marginEnd="25sp"
+                android:layout_marginRight="25sp"
+                android:textSize="23sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="149dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50sp"
+                android:layout_marginRight="50sp"
+                android:text="@string/theme"
+                android:textColor="#000000"
+                android:textSize="23sp" />
+
+            <Spinner
+                android:id="@+id/themeSpinner"
+                android:layout_width="75dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="-50sp"
+                android:layout_marginLeft="-50sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="154dp"
+                android:layout_height="77dp"
+                android:background="#055DA3"
+                android:text="@string/start"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
