@@ -16,6 +16,7 @@ import android.widget.TableRow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SpeakNowActivity extends AppCompatActivity {
     private Spinner spinner;
@@ -30,7 +31,7 @@ public class SpeakNowActivity extends AppCompatActivity {
         myToolbar.setTitle("Speak Now");
         myToolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -94,6 +95,16 @@ public class SpeakNowActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner3.setAdapter(adapter3);
+
+        Button button = (Button)findViewById(R.id.start);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LoadingScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
 }

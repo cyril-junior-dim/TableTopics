@@ -66,8 +66,8 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.account:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 Toast.makeText(this, "Account Info", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 return true;
             case R.id.settings:
                 Toast.makeText(this, "App settings", Toast.LENGTH_SHORT).show();
