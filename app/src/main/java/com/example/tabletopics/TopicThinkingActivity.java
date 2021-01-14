@@ -25,9 +25,9 @@ public class TopicThinkingActivity extends AppCompatActivity {
     TextView title;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    List<String> topics = new ArrayList<>();
     String theme = "";
     Random random = new Random();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +54,18 @@ public class TopicThinkingActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
+                            List<String> topics = new ArrayList<>();
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 topics.add(document.getString("title"));
                             }
+                            int randomIndex = random.nextInt(topics.size());
+                            String randomElement = topics.get(randomIndex);
+                            title.setText(randomElement);
                         } else{
                             Log.w("TAG", "Error getting documents.", task.getException());
                         }
+
                     }
                 });
-        int randomIndex = random.nextInt(topics.size());
-        String randomElement = topics.get(randomIndex);
-        title.setText(randomElement);
     }
 }
