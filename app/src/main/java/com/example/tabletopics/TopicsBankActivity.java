@@ -130,4 +130,10 @@ public class TopicsBankActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
+    }
 }

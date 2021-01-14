@@ -1,16 +1,16 @@
 package com.example.tabletopics;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class TopicThinkingActivity extends AppCompatActivity {
     private static final long START_TIME_IN_MILLIS = 30000;
@@ -32,11 +31,12 @@ public class TopicThinkingActivity extends AppCompatActivity {
     TextView title;
     TextView timerText;
     TextView ret;
+    TextToSpeech textToSpeech;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String theme = "";
     Random random = new Random();
-    Button button;
+    ImageButton audio;
 
     private CountDownTimer mCountDownTimer;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
@@ -49,15 +49,7 @@ public class TopicThinkingActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.speechTitle);
         timerText = (TextView) findViewById(R.id.timertext);
         ret = (TextView) findViewById(R.id.ret);
-
-        ret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCountDownTimer.cancel();
-                Intent intent = new Intent(v.getContext(), SpeakNowActivity.class);
-                startActivity(intent);
-            }
-        });
+        audio = (ImageButton) findViewById(R.id.audio);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -69,6 +61,23 @@ public class TopicThinkingActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = textToSpeech.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("textToSpeech", "Language not supported");
+                    } else {
+                        audio.setEnabled(true);
+                    }
+                } else {
+                    Log.e("textToSpeech", "Initialization failed");
+                }
+            }
+        });
 
         fStore.collection("topics")
                 .whereEqualTo("category", theme)
@@ -82,15 +91,44 @@ public class TopicThinkingActivity extends AppCompatActivity {
                                 topics.add(document.getString("title"));
                             }
                             int randomIndex = random.nextInt(topics.size());
-                            String randomElement = topics.get(randomIndex);
+                            String randomElement = "'" + topics.get(randomIndex)  + "'";
                             title.setText(randomElement);
                             startTimer();
                         } else{
                             Log.w("TAG", "Error getting documents.", task.getException());
                         }
-
                     }
                 });
+
+        ret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCountDownTimer.cancel();
+                Intent intent = new Intent(v.getContext(), SpeakNowActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        audio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
+    }
+
+    private void speak(){
+        String toSpeak = title.getText().toString();
+        textToSpeech.speak("test", TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 
     private void startTimer() {

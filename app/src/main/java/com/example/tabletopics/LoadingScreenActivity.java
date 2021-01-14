@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -70,7 +71,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
         });
 
         textSwitcher.setText(prompts[stringIndex]);
-        handler.postDelayed(buttonClicker, 1500);
+        handler.postDelayed(buttonClicker, 1150);
     }
 
     private Runnable buttonClicker = new Runnable() {
@@ -78,7 +79,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
         public void run() {
             nextButton.performClick();
             if (count++ < prompts.length - 1) {
-                handler.postDelayed(this, 1500);
+                handler.postDelayed(this, 1150);
             }
         }
     };
