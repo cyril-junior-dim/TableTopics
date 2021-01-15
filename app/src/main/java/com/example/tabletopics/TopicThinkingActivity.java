@@ -61,8 +61,8 @@ public class TopicThinkingActivity extends AppCompatActivity{
         mEditText = findViewById(R.id.edit_text);
 
         Intent intent = getIntent();
-        maxTime = intent.getLongExtra("maximum", 1);
         theme = intent.getStringExtra("theme");
+        maxTime = intent.getLongExtra("maximum", 1);
 
 //endregion
 
@@ -176,7 +176,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
     }
 
     private void startTimer2() {
-        //mTimeLeftInMillis = maxTime;
+        mTimeLeftInMillis = maxTime;
         updateCountDownText();
     }
 

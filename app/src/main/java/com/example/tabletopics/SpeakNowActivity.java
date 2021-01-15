@@ -118,7 +118,7 @@ public class SpeakNowActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SpeakNowActivity.this, TopicThinkingActivity.class);
+                Intent intent =  new Intent(SpeakNowActivity.this, LoadingScreenActivity.class);
                 intent.putExtra("theme", theme);
                 intent.putExtra("maximum", maximum);
                 startActivity(intent);
