@@ -7,6 +7,8 @@ import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,7 +44,6 @@ public class TopicThinkingActivity extends AppCompatActivity{
     private Random random = new Random();
     private ImageButton audio;
     private Button skip;
-    private int count;
     //endregion
 
     @Override
@@ -185,6 +186,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
         speakerText.setVisibility(View.VISIBLE);
         mTimeLeftInMillis = maxTime;
 
+        startAnimation();
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -203,6 +205,11 @@ public class TopicThinkingActivity extends AppCompatActivity{
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         textView.setText(timeLeftFormatted);
+    }
+
+    private void startAnimation(){
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+        speakerText.startAnimation(animation);
     }
 
 }
