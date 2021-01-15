@@ -1,11 +1,14 @@
 package com.example.tabletopics;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -14,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,31 +27,38 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
-public class TopicThinkingActivity extends AppCompatActivity {
+public class TopicThinkingActivity extends AppCompatActivity{
+
+    //region Class Variables
     private static final long START_TIME_IN_MILLIS = 30000;
-
-    TextView title;
-    TextView timerText;
-    TextView ret;
-    TextToSpeech textToSpeech;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    String theme = "";
-    Random random = new Random();
-    ImageButton audio;
-
-    private CountDownTimer mCountDownTimer;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    private CountDownTimer mCountDownTimer;
+    private TextView title, timerText, ret, tip;
+    private EditText mEditText;
+    private TextToSpeech tts;
+    private ValueAnimator valueAnimator;
+    private FirebaseFirestore fStore;
+    private String theme = "";
+    private Random random = new Random();
+    private ImageButton audio;
+    private Button skip;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_thinking);
 
-        title = (TextView) findViewById(R.id.speechTitle);
-        timerText = (TextView) findViewById(R.id.timertext);
-        ret = (TextView) findViewById(R.id.ret);
-        audio = (ImageButton) findViewById(R.id.audio);
+//region Instantiation
+        title = findViewById(R.id.speechTitle);
+        timerText = findViewById(R.id.timertext);
+        ret = findViewById(R.id.ret);
+        tip = findViewById(R.id.textView18);
+        audio = findViewById(R.id.audio);
+        skip = findViewById(R.id.skip);
+        //fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        mEditText = findViewById(R.id.edit_text);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -58,27 +67,9 @@ public class TopicThinkingActivity extends AppCompatActivity {
         {
             theme = bundle.getString("theme");
         }
+//endregion
 
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.US);
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("textToSpeech", "Language not supported");
-                    } else {
-                        audio.setEnabled(true);
-                    }
-                } else {
-                    Log.e("textToSpeech", "Initialization failed");
-                }
-            }
-        });
-
+//region Query Database
         fStore.collection("topics")
                 .whereEqualTo("category", theme)
                 .get()
@@ -99,6 +90,38 @@ public class TopicThinkingActivity extends AppCompatActivity {
                         }
                     }
                 });
+//endregion
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.UK);
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    } else {
+                        audio.setEnabled(true);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
+
+        audio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
+            }
+        });
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCountDownTimer.onFinish();
+            }
+        });
 
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,24 +132,32 @@ public class TopicThinkingActivity extends AppCompatActivity {
             }
         });
 
-        audio.setOnClickListener(new View.OnClickListener() {
+        valueAnimator = ValueAnimator.ofFloat(1f, 0f);
+        valueAnimator.setDuration(500);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onClick(View v) {
-                speak();
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float alpha = (float) animation.getAnimatedValue();
+                timerText.setAlpha(alpha);
+                tip.setAlpha(alpha);
+                audio.setAlpha(alpha);
+                skip.setAlpha(alpha);
             }
         });
+
     }
 
-    private void speak(){
-        String toSpeak = title.getText().toString();
-        textToSpeech.speak("test", TextToSpeech.QUEUE_FLUSH, null);
+    private void speak() {
+        mEditText.setText(title.getText());
+        String text = mEditText.getText().toString();
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
     protected void onDestroy() {
-        if (textToSpeech != null) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
         }
         super.onDestroy();
     }
@@ -140,7 +171,8 @@ public class TopicThinkingActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                timerText.setVisibility(View.GONE);
+                valueAnimator.start();
+                //timerText.setVisibility(View.GONE);
             }
         }.start();
     }
@@ -151,4 +183,5 @@ public class TopicThinkingActivity extends AppCompatActivity {
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         timerText.setText(timeLeftFormatted);
     }
+
 }
