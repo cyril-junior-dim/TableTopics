@@ -33,7 +33,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
     private long mTimeLeftInMillis = 30000;
     private long maxTime;
     private CountDownTimer mCountDownTimer;
-    private TextView title, timerText, ret, tip;
+    private TextView title, timerText, speakerText, ret, tip;
     private EditText mEditText;
     private TextToSpeech tts;
     private ValueAnimator valueAnimator;
@@ -42,6 +42,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
     private Random random = new Random();
     private ImageButton audio;
     private Button skip;
+    private int count;
     //endregion
 
     @Override
@@ -52,6 +53,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
 //region Instantiation
         title = findViewById(R.id.speechTitle);
         timerText = findViewById(R.id.timertext);
+        speakerText = findViewById(R.id.speakerTimer);
         ret = findViewById(R.id.ret);
         tip = findViewById(R.id.textView18);
         audio = findViewById(R.id.audio);
@@ -116,8 +118,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mCountDownTimer.cancel();
-                mCountDownTimer.onFinish();
+                startTimer2();
             }
         });
 
@@ -165,26 +166,43 @@ public class TopicThinkingActivity extends AppCompatActivity{
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
+                updateCountDownText(timerText);
             }
             @Override
             public void onFinish() {
-                //valueAnimator.start();
                 startTimer2();
             }
         }.start();
     }
 
-    private void startTimer2() {
+    private void startTimer2(){
+        valueAnimator.start();
+        timerText.setVisibility(View.GONE);
+        audio.setVisibility(View.GONE);
+        tip.setVisibility(View.GONE);
+        skip.setVisibility(View.GONE);
+        mCountDownTimer.cancel();
+        speakerText.setVisibility(View.VISIBLE);
         mTimeLeftInMillis = maxTime;
-        updateCountDownText();
+
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText(speakerText);
+            }
+            @Override
+            public void onFinish() {
+                //valueAnimator.start();
+            }
+        }.start();
     }
 
-    private void updateCountDownText() {
+    private void updateCountDownText(TextView textView) {
         int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        timerText.setText(timeLeftFormatted);
+        textView.setText(timeLeftFormatted);
     }
 
 }
