@@ -142,7 +142,8 @@ public class SpeakingActivity extends AppCompatActivity{
         btnCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), AfterSpeechActivity.class);
+                startActivity(intent);
             }
         });
 

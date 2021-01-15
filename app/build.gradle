@@ -43,9 +43,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.0.1'
     implementation 'androidx.multidex:multidex:2.0.1'
     testImplementation 'junit:junit:4.+'
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    def nav_version = "2.2.0"
+
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 
 }
