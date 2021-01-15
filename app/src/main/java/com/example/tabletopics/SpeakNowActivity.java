@@ -22,9 +22,9 @@ import java.util.Objects;
 public class SpeakNowActivity extends AppCompatActivity {
 
     private String theme = "";
-    private Spinner spinner;
     private Spinner spinner2;
     private Spinner spinner3;
+    private long maximum;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,17 +45,11 @@ public class SpeakNowActivity extends AppCompatActivity {
             }
         });
 
-        spinner = findViewById(R.id.minTimeSpinner);
         spinner2 = findViewById(R.id.maxTimeSpinner);
         spinner3 = findViewById(R.id.themeSpinner);
 
-        List<Integer> minTime = new ArrayList<>();
-        for(int i = 0; i <= 10; i++){
-            minTime.add(i);
-        }
-
-        List<Integer> maxTime = new ArrayList<>();
-        for(int i = 1; i <= 15; i++){
+        List<Long> maxTime = new ArrayList<>();
+        for(long i = 1; i <= 15; i++){
             maxTime.add(i);
         }
 
@@ -81,21 +75,30 @@ public class SpeakNowActivity extends AppCompatActivity {
         String[] themesArr = new String[themes.size()];
         themesArr = themes.toArray(themesArr);
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
-                android.R.layout.simple_spinner_item, minTime);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Long[] timesArr = new Long[maxTime.size()];
+        timesArr = maxTime.toArray(timesArr);
 
-        spinner.setAdapter(adapter);
-
-        ArrayAdapter<Integer> adapter2 = new ArrayAdapter<Integer>(this,
-                android.R.layout.simple_spinner_item, maxTime);
+        ArrayAdapter<Long> adapter2 = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, timesArr);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner2.setAdapter(adapter2);
 
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                maximum = (long)parent.getItemAtPosition(position)*60000;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, themesArr);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner3.setAdapter(adapter3);
 
@@ -115,8 +118,9 @@ public class SpeakNowActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LoadingScreenActivity.class);
+                Intent intent = new Intent(SpeakNowActivity.this, TopicThinkingActivity.class);
                 intent.putExtra("theme", theme);
+                intent.putExtra("maximum", maximum);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }

@@ -29,6 +29,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="50sp"
             android:gravity="center"
             android:paddingTop="75sp"
             android:paddingBottom="25sp">
@@ -37,39 +38,11 @@
                 android:id="@+id/settings_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:text="@string/settings"
+                android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="32sp"
-                android:gravity="center_horizontal" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingTop="16sp"
-            android:paddingBottom="25sp">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="195dp"
-                android:layout_height="28dp"
-                android:paddingRight="10sp"
-                android:text="@string/minimum_time"
-                android:textColor="#000000"
-                android:textSize="23sp"
-                tools:ignore="MissingConstraints" />
-
-            <Spinner
-                android:id="@+id/minTimeSpinner"
-                android:layout_width="75dp"
-                android:layout_height="37dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center"
-                tools:ignore="MissingConstraints" />
+                android:textSize="32sp" />
 
         </TableRow>
 
@@ -83,6 +56,8 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20sp"
+                android:layout_marginRight="20sp"
                 android:text="@string/maximum_time"
                 android:textColor="#000000"
                 android:textSize="23sp" />
@@ -90,9 +65,7 @@
             <Spinner
                 android:id="@+id/maxTimeSpinner"
                 android:layout_width="10dp"
-                android:layout_height="37dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp" />
+                android:layout_height="37dp" />
 
         </TableRow>
 
@@ -118,10 +91,6 @@
                 android:id="@+id/switch1"
                 android:layout_width="79dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="-25sp"
-                android:layout_marginLeft="-25sp"
-                android:layout_marginEnd="25sp"
-                android:layout_marginRight="25sp"
                 android:textSize="23sp" />
         </TableRow>
 
@@ -145,15 +114,14 @@
                 android:id="@+id/themeSpinner"
                 android:layout_width="75dp"
                 android:layout_height="37dp"
-                android:layout_marginStart="-50sp"
-                android:layout_marginLeft="-50sp"
-                android:layout_marginEnd="15sp"
-                android:layout_marginRight="15sp" />
+                android:layout_marginStart="-45sp"
+                android:layout_marginLeft="-45sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="15sp"
             android:gravity="center"
             android:paddingTop="16sp"
             android:paddingBottom="25sp">

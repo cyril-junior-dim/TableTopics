@@ -25,7 +25,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
     private Button nextButton;
     private int stringIndex = 0;
     int count = 0;
-    String theme = "";
     private String[] prompts = {"Ready?", "Set...", "GO!"};
     private TextView textView;
     private Handler handler = new Handler();
@@ -35,14 +34,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-        if(bundle != null)
-        {
-            theme = bundle.getString("theme");
-        }
-
         textSwitcher = findViewById(R.id.textSwitcher);
 
         nextButton = findViewById(R.id.magicButton);
@@ -51,7 +42,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (stringIndex == prompts.length - 1) {
                     Intent intent = new Intent(v.getContext(), TopicThinkingActivity.class);
-                    intent.putExtra("theme", theme);
                     startActivity(intent);
                 } else {
                     textSwitcher.setText(prompts[++stringIndex]);

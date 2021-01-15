@@ -30,8 +30,8 @@ import java.util.Random;
 public class TopicThinkingActivity extends AppCompatActivity{
 
     //region Class Variables
-    private static final long START_TIME_IN_MILLIS = 30000;
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    private long mTimeLeftInMillis = 30000;
+    private long maxTime;
     private CountDownTimer mCountDownTimer;
     private TextView title, timerText, ret, tip;
     private EditText mEditText;
@@ -61,12 +61,9 @@ public class TopicThinkingActivity extends AppCompatActivity{
         mEditText = findViewById(R.id.edit_text);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        maxTime = intent.getLongExtra("maximum", 1);
+        theme = intent.getStringExtra("theme");
 
-        if(bundle != null)
-        {
-            theme = bundle.getString("theme");
-        }
 //endregion
 
 //region Query Database
@@ -119,6 +116,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //mCountDownTimer.cancel();
                 mCountDownTimer.onFinish();
             }
         });
@@ -171,10 +169,15 @@ public class TopicThinkingActivity extends AppCompatActivity{
             }
             @Override
             public void onFinish() {
-                valueAnimator.start();
-                //timerText.setVisibility(View.GONE);
+                //valueAnimator.start();
+                startTimer2();
             }
         }.start();
+    }
+
+    private void startTimer2() {
+        //mTimeLeftInMillis = maxTime;
+        updateCountDownText();
     }
 
     private void updateCountDownText() {
