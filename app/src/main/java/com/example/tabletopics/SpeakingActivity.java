@@ -2,6 +2,7 @@ package com.example.tabletopics;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,6 +48,7 @@ public class SpeakingActivity extends AppCompatActivity{
     //endregion
 
     //region Views
+    private ConstraintLayout constraintLayout;
     private CountDownTimer mCountDownTimer;
     private Chronometer chronometer;
     private TextView title, timerText, ret, tip;
@@ -73,6 +76,7 @@ public class SpeakingActivity extends AppCompatActivity{
         mEditText = findViewById(R.id.edit_text);
         imageView = findViewById(R.id.clock);
         btnCircle = findViewById(R.id.btnCircle);
+        constraintLayout = findViewById(R.id.myLayout);
 
         Intent intent = getIntent();
         theme = intent.getStringExtra("theme");
@@ -155,13 +159,18 @@ public class SpeakingActivity extends AppCompatActivity{
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 if((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 60000 ){
-
+                    constraintLayout.setBackgroundResource(R.drawable.background_green);
+                    btnCircle.setBackgroundResource(R.drawable.btn_circle_background_green);
                 }
-                else if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 30000 ){
 
+                if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 30000 ){
+                    constraintLayout.setBackgroundResource(R.drawable.background_amber);
+                    btnCircle.setBackgroundResource(R.drawable.btn_circle_background_amber);
                 }
-                else if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime ){
 
+                if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime ){
+                    constraintLayout.setBackgroundResource(R.drawable.background_red);
+                    btnCircle.setBackgroundResource(R.drawable.btn_circle_background_black);
                 }
             }
         });
@@ -254,7 +263,11 @@ public class SpeakingActivity extends AppCompatActivity{
 
     private void startAnimation(){
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+        Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.scale_up2);
+
         chronometer.startAnimation(animation);
+        title.startAnimation(animation2);
+        btnCircle.setVisibility(View.VISIBLE);
     }
 
 }
