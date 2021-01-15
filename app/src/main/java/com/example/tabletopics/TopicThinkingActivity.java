@@ -4,14 +4,17 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,18 +37,25 @@ public class TopicThinkingActivity extends AppCompatActivity{
     //region Class Variables
     private long mTimeLeftInMillis = 30000;
     private long maxTime;
-    private CountDownTimer mCountDownTimer;
-    private TextView title, timerText, speakerText, ret, tip;
-    private EditText mEditText;
-    private TextToSpeech tts;
-    private ValueAnimator valueAnimator;
+    private long pauseOffset;
+    private boolean running;
     private FirebaseFirestore fStore;
     private String theme = "";
     private Random random = new Random();
+
+    //endregion
+
+    //region Views
+    private CountDownTimer mCountDownTimer;
+    private Chronometer chronometer;
+    private TextView title, timerText, ret, tip;
+    private ImageView imageView;
+    private EditText mEditText;
+    private TextToSpeech tts;
+    private ValueAnimator valueAnimator;
     private ImageButton audio;
     private Button skip;
     //endregion
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +64,14 @@ public class TopicThinkingActivity extends AppCompatActivity{
 //region Instantiation
         title = findViewById(R.id.speechTitle);
         timerText = findViewById(R.id.timertext);
-        speakerText = findViewById(R.id.speakerTimer);
         ret = findViewById(R.id.ret);
         tip = findViewById(R.id.textView18);
         audio = findViewById(R.id.audio);
         skip = findViewById(R.id.skip);
-        //fAuth = FirebaseAuth.getInstance();
+        chronometer = findViewById(R.id.Timer);
         fStore = FirebaseFirestore.getInstance();
         mEditText = findViewById(R.id.edit_text);
+        imageView = findViewById(R.id.clock);
 
         Intent intent = getIntent();
         theme = intent.getStringExtra("theme");
@@ -119,7 +129,8 @@ public class TopicThinkingActivity extends AppCompatActivity{
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTimer2();
+                stopCountdown();
+                startChronometer(chronometer);
             }
         });
 
@@ -129,6 +140,21 @@ public class TopicThinkingActivity extends AppCompatActivity{
                 mCountDownTimer.cancel();
                 Intent intent = new Intent(v.getContext(), SpeakNowActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 60000 ){
+
+                }
+                else if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 30000 ){
+
+                }
+                else if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime ){
+
+                }
             }
         });
 
@@ -145,6 +171,28 @@ public class TopicThinkingActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    public void startChronometer(View v){
+        startAnimation();
+        if(!running){
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+        }
+    }
+
+    public void pauseChronometer(View v){
+        if(running){
+            chronometer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+            running = false;
+        }
+    }
+
+    public void resetChronometer(View v){
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
     }
 
     private void speak() {
@@ -171,33 +219,22 @@ public class TopicThinkingActivity extends AppCompatActivity{
             }
             @Override
             public void onFinish() {
-                startTimer2();
+                stopCountdown();
+                startChronometer(chronometer);
             }
         }.start();
     }
 
-    private void startTimer2(){
+    private void stopCountdown(){
         valueAnimator.start();
         timerText.setVisibility(View.GONE);
         audio.setVisibility(View.GONE);
         tip.setVisibility(View.GONE);
         skip.setVisibility(View.GONE);
         mCountDownTimer.cancel();
-        speakerText.setVisibility(View.VISIBLE);
-        mTimeLeftInMillis = maxTime;
+        imageView.setVisibility(View.VISIBLE);
+        chronometer.setVisibility(View.VISIBLE);
 
-        startAnimation();
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText(speakerText);
-            }
-            @Override
-            public void onFinish() {
-                //valueAnimator.start();
-            }
-        }.start();
     }
 
     private void updateCountDownText(TextView textView) {
@@ -209,7 +246,7 @@ public class TopicThinkingActivity extends AppCompatActivity{
 
     private void startAnimation(){
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_up);
-        speakerText.startAnimation(animation);
+        chronometer.startAnimation(animation);
     }
 
 }
