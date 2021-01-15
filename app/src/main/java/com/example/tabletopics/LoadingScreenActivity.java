@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -13,12 +12,6 @@ import android.widget.Button;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class LoadingScreenActivity extends AppCompatActivity {
     private TextSwitcher textSwitcher;
@@ -47,7 +40,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (stringIndex == prompts.length - 1) {
-                    Intent intent = new Intent(v.getContext(), TopicThinkingActivity.class);
+                    Intent intent = new Intent(v.getContext(), SpeakingActivity.class);
                     intent.putExtra("theme", theme);
                     intent.putExtra("maximum", maximum);
                     startActivity(intent);
