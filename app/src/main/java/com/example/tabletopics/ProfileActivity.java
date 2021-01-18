@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView firstName, lastName, email;
+    TextView fullName, email;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
@@ -43,8 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        firstName = findViewById(R.id.profileFirstName);
-        lastName = findViewById(R.id.profileLastName);
+        fullName = findViewById(R.id.profileFullName);
         email = findViewById(R.id.profileEmail);
 
         fAuth = FirebaseAuth.getInstance();
@@ -52,14 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         userID = fAuth.getCurrentUser().getUid();
 
-
-
         DocumentReference documentReference = fStore.collection("users").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                firstName.setText(documentSnapshot.getString("first_Name"));
-                lastName.setText(documentSnapshot.getString("last_Name"));
+                fullName.setText(documentSnapshot.getString("full_Name"));
                 email.setText(documentSnapshot.getString("email"));
             }
         });

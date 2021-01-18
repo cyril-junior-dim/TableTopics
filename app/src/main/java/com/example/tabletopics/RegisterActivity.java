@@ -21,9 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class RegisterActivity extends AppCompatActivity {
     EditText mFirstName, mLastName, mEmail, mPassword, mConfirmPassword;
@@ -32,13 +34,16 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     ProgressBar progressBar;
     FirebaseFirestore fStore;
-    String userID;
+    String userID, email, password, firstName, lastName;
+    Boolean nameTaken = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //region Instantiation
         mFirstName = findViewById(R.id.firstName);
         mLastName = findViewById(R.id.lastName);
         mEmail = findViewById(R.id.emailAddress);
@@ -46,11 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
         mRegistrationBtn = findViewById(R.id.register);
         mLoginBtn = findViewById(R.id.createText);
         mConfirmPassword = findViewById(R.id.confirmPassword);
-
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBarHome);
-
+        //endregion
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
@@ -59,11 +63,20 @@ public class RegisterActivity extends AppCompatActivity {
         mRegistrationBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
-                String firstName = mFirstName.getText().toString();
-                String lastName = mLastName.getText().toString();
+                email = mEmail.getText().toString().trim();
+                password = mPassword.getText().toString().trim();
+                firstName = mFirstName.getText().toString();
+                lastName = mLastName.getText().toString();
 
+                if(TextUtils.isEmpty(firstName)){
+                    mFirstName.setError("Name required for Leaderboard");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(lastName)){
+                    mLastName.setError("Surname required for Leaderboard");
+                    return;
+                }
 
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email is required");
@@ -97,9 +110,10 @@ public class RegisterActivity extends AppCompatActivity {
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
                             Map<String, Object> user = new HashMap<>();
-                            user.put("first_Name",firstName);
-                            user.put("last_Name",lastName);
+                            user.put("full_Name", firstName);
+                            user.put("username", lastName);
                             user.put("email",email);
+                            user.put("speech_count", 0);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

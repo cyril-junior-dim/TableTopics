@@ -2,7 +2,6 @@ package com.example.tabletopics;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -44,6 +43,7 @@ public class SpeakingActivity extends AppCompatActivity{
     private FirebaseFirestore fStore;
     private String theme = "";
     private Random random = new Random();
+    private String completionStatus = "Under Time";
 
     //endregion
 
@@ -84,6 +84,8 @@ public class SpeakingActivity extends AppCompatActivity{
 
 //endregion
 
+        skip.setEnabled(false);
+
 //region Query Database
         fStore.collection("topics")
                 .whereEqualTo("category", theme)
@@ -100,6 +102,7 @@ public class SpeakingActivity extends AppCompatActivity{
                             String randomElement = "'" + topics.get(randomIndex)  + "'";
                             title.setText(randomElement);
                             startTimer();
+                            skip.setEnabled(true);
                         } else{
                             Log.w("TAG", "Error getting documents.", task.getException());
                         }
@@ -142,7 +145,11 @@ public class SpeakingActivity extends AppCompatActivity{
         btnCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pauseChronometer(chronometer);
+                String timeUsed = "Speech Time:\t" + chronometer.getText();
                 Intent intent = new Intent(v.getContext(), AfterSpeechActivity.class);
+                intent.putExtra("time", timeUsed);
+                intent.putExtra("status", completionStatus);
                 startActivity(intent);
             }
         });
@@ -159,19 +166,30 @@ public class SpeakingActivity extends AppCompatActivity{
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
+                if((SystemClock.elapsedRealtime() - chronometer.getBase()) < maxTime - 60000 ){
+                    completionStatus = "Under Time";
+                }
+
                 if((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 60000 ){
+                    completionStatus = "Minimum Time Reached";
                     constraintLayout.setBackgroundResource(R.drawable.background_green);
                     btnCircle.setBackgroundResource(R.drawable.btn_circle_background_green);
                 }
 
                 if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime - 30000 ){
                     constraintLayout.setBackgroundResource(R.drawable.background_amber);
+                    completionStatus = "Optimum Timing";
                     btnCircle.setBackgroundResource(R.drawable.btn_circle_background_amber);
                 }
 
                 if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime ){
                     constraintLayout.setBackgroundResource(R.drawable.background_red);
+                    completionStatus = "Maximum Time Reached";
                     btnCircle.setBackgroundResource(R.drawable.btn_circle_background_black);
+                }
+
+                if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= maxTime + 30000 ){
+                    completionStatus = "Overtime";
                 }
             }
         });

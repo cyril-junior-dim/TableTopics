@@ -45,7 +45,7 @@
         android:layout_marginRight="24dp"
         android:background="@color/black"
         android:ems="10"
-        android:hint="First Name"
+        android:hint="First Name(s)"
         android:inputType="textPersonName"
         android:padding="10sp"
         android:textColor="#FFFFFF"
@@ -67,7 +67,7 @@
         android:layout_marginRight="24dp"
         android:background="@color/black"
         android:ems="10"
-        android:hint="Last Name"
+        android:hint="Surname"
         android:inputType="textPersonName"
         android:padding="10sp"
         android:textColor="#FFFFFF"
@@ -194,10 +194,10 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="32dp"
-        android:tint="#FFEB3B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_clipart" />
+        app:srcCompat="@drawable/ic_clipart"
+        app:tint="#FFEB3B" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

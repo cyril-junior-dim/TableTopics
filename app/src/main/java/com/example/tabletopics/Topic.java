@@ -16,6 +16,7 @@ public class Topic {
         Fantasy,
         Travel
     }
+    public double rating;
 
     public Topic(String title, Category category){
         this.category = category;

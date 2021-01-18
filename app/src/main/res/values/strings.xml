@@ -37,7 +37,14 @@
     <string name="icon">icon</string>
     <string name="pro_tip_use_your_thinking_time">Pro Tip: Use your thinking time!</string>
     <string name="topic">Topic:</string>
-    <string name="skip">Skip</string>
     <string name="_00_00">00:00</string>
     <string name="loading">Loading...</string>
+    <string name="home">Home</string>
+    <string name="retry">Retry</string>
+    <string name="generating_stats">Generating stats...</string>
+    <string name="rate_your_performance">Rate Your Performance</string>
+    <string name="skip2"><![CDATA[Skip >]]></string>
+    <string name="congratulations">CONGRATULATIONS!</string>
+    <string name="new_topic">New Topic</string>
+    <string name="skip">Skip</string>
 </resources>
