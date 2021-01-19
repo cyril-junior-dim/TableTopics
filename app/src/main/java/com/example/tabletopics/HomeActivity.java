@@ -36,6 +36,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        Button button2 = (Button)findViewById(R.id.goToLeaderboard);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LeaderboardActivity.class);
+                startActivity(intent);
+            }
+        });
+
         Button button3 = (Button)findViewById(R.id.goToTopicsBank);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override

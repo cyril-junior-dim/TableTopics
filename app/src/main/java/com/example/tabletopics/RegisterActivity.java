@@ -110,8 +110,8 @@ public class RegisterActivity extends AppCompatActivity {
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
                             Map<String, Object> user = new HashMap<>();
-                            user.put("full_Name", firstName);
-                            user.put("username", lastName);
+                            user.put("first_Name", firstName);
+                            user.put("last_Name", lastName);
                             user.put("email",email);
                             user.put("speech_count", 0);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {

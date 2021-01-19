@@ -50,7 +50,7 @@
             android:paddingBottom="25sp">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/goToLeaderboard"
                 android:layout_width="197dp"
                 android:layout_height="100dp"
                 android:background="#055DA3"

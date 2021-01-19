@@ -82,7 +82,7 @@ public class TopicsListActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()){
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 topics.add(document.getString("title"));
                             }
                         } else{
