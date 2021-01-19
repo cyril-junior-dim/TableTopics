@@ -47,4 +47,6 @@
     <string name="congratulations">CONGRATULATIONS!</string>
     <string name="new_topic">New Topic</string>
     <string name="skip">Skip</string>
+    <string name="stats">Stats</string>
+    <string name="overview">Overview</string>
 </resources>
