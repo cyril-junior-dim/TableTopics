@@ -1,9 +1,10 @@
 package com.example.tabletopics;
 
 import android.content.Intent;
-import 	androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static int SPLASH_TIME_OUT = 2500;

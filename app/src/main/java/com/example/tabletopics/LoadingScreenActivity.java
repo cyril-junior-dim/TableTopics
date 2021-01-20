@@ -1,7 +1,5 @@
 package com.example.tabletopics;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoadingScreenActivity extends AppCompatActivity {
     private TextSwitcher textSwitcher;

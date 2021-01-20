@@ -1,11 +1,6 @@
 package com.example.tabletopics;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.firebase.auth.FirebaseAuth;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -83,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case R.id.help:
                 Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), HelpActivity.class));
                 return true;
             case R.id.logout:
                 Toast.makeText(this, "Exiting Account", Toast.LENGTH_SHORT).show();

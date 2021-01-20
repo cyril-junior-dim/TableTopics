@@ -1,7 +1,5 @@
 package com.example.tabletopics;
 
-import java.util.Locale;
-
 public class Topic {
     public String title;
     public Category category;

@@ -49,4 +49,13 @@
     <string name="skip">Skip</string>
     <string name="stats">Stats</string>
     <string name="overview">Overview</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="to_continue_please_re_enter_your_credentials">To Continue, Please Re-Enter Your Credentials</string>
+    <string name="submit">Submit</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="back"><![CDATA[< Back]]></string>
 </resources>

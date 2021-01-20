@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".HelpActivity"></activity>
+        <activity android:name=".EditInfoActivity"></activity>
+        <activity android:name=".AuthenticateActivity" />
+        <activity android:name=".HelpActivity" />
         <activity android:name=".AfterSpeechActivity" />
         <activity android:name=".SpeakingActivity" />
         <activity android:name=".LoadingScreenActivity" />
