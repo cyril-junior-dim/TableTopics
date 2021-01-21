@@ -20,9 +20,9 @@ public class LoadingScreenActivity extends AppCompatActivity {
     int count = 0;
     String theme = "";
     Long maximum;
-    private String[] prompts = {"Ready?", "Set...", "GO!"};
+    private final String[] prompts = {"Ready?", "Set...", "GO!"};
     private TextView textView;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
         handler.postDelayed(buttonClicker, 1150);
     }
 
-    private Runnable buttonClicker = new Runnable() {
+    private final Runnable buttonClicker = new Runnable() {
         @Override
         public void run() {
             nextButton.performClick();
@@ -78,6 +78,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        
+
     }
 }
