@@ -75,4 +75,9 @@ public class LoadingScreenActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        
+    }
 }

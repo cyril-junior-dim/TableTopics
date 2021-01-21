@@ -18,9 +18,15 @@
         <activity android:name=".EditInfoActivity"></activity>
         <activity android:name=".AuthenticateActivity" />
         <activity android:name=".HelpActivity" />
-        <activity android:name=".AfterSpeechActivity" />
-        <activity android:name=".SpeakingActivity" />
-        <activity android:name=".LoadingScreenActivity" />
+        <activity
+            android:name=".AfterSpeechActivity"
+            android:noHistory="true"/>
+        <activity
+            android:name=".SpeakingActivity"
+            android:noHistory="true"/>
+        <activity
+            android:name=".LoadingScreenActivity"
+            android:noHistory="true"/>
         <activity android:name=".TopicsListActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />

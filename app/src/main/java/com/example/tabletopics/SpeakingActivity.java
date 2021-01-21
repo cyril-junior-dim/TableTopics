@@ -289,4 +289,9 @@ public class SpeakingActivity extends AppCompatActivity{
         btnCircle.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
 }

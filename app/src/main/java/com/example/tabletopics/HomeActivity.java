@@ -1,24 +1,30 @@
 package com.example.tabletopics;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
-
-    private BottomAppBar bottomAppBar;
+    TextView textView;
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +34,35 @@ public class HomeActivity extends AppCompatActivity {
         myToolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(myToolbar);
 
-        Button button = (Button)findViewById(R.id.goToSpeakNow);
+        textView = findViewById(R.id.notVerified);
+        fAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = fAuth.getCurrentUser();
+
+        assert user != null;
+        if(user.isEmailVerified()){
+            textView.setVisibility(View.VISIBLE);
+
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Send verification link
+                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(HomeActivity.this, "A verification email has been sent to your mailbox", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("TAG", "onFailure: Email not sent "+ e.getMessage());
+                        }
+                    });
+                }
+            });
+        }
+
+        Button button = findViewById(R.id.goToSpeakNow);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button button2 = (Button)findViewById(R.id.goToLeaderboard);
+        Button button2 = findViewById(R.id.goToLeaderboard);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button button3 = (Button)findViewById(R.id.goToTopicsBank);
+        Button button3 = findViewById(R.id.goToTopicsBank);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button button4 = (Button)findViewById(R.id.goToCoaching);
+        Button button4 = findViewById(R.id.goToCoaching);
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
@@ -94,5 +129,13 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 }
