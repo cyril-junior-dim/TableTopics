@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"/>
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55sp"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_horizontal"
+            android:paddingTop="25sp">
+
+            <TextView
+                android:id="@+id/notVerified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/email_not_verified_n_click_here_to_verify"
+                android:textColor="#FF0000"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="45sp"
+            android:paddingBottom="25sp">
+
+            <Button
+                android:id="@+id/goToSpeakNow"
+                android:layout_width="197dp"
+                android:layout_height="100dp"
+                android:background="#055DA3"
+                android:text="@string/speak_now"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/button2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <Button
+                android:id="@+id/goToLeaderboard"
+                android:layout_width="197dp"
+                android:layout_height="100dp"
+                android:background="#055DA3"
+                android:text="@string/leaderboard"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/goToTopicsBank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="25sp">
+
+            <Button
+                android:id="@+id/goToTopicsBank"
+                android:layout_width="197dp"
+                android:layout_height="100dp"
+                android:background="#055DA3"
+                android:text="@string/hot_topics"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/goToCoaching"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/goToCoaching"
+                android:layout_width="197dp"
+                android:layout_height="100dp"
+                android:background="#055DA3"
+                android:text="@string/coaching"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </TableRow>
+
+
+    </TableLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

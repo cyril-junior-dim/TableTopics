@@ -14,8 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:appComponentFactory">
-        <activity android:name=".EditInfoActivity"></activity>
+        tools:replace="android:appComponentFactory"
+        tools:targetApi="p">
+        <activity android:name=".EditInfoActivity" />
         <activity android:name=".AuthenticateActivity" />
         <activity android:name=".HelpActivity" />
         <activity

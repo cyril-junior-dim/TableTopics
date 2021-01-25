@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/newTopic"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home"
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/search"
+    <item android:id="@+id/statistics"
         android:title="@string/stats"
         android:icon="@drawable/ic_baseline_bar_chart_24"
         android:tint="#FFFFFF"
@@ -15,21 +15,21 @@
         />
 
     <item android:id="@+id/add"
-        android:title="Add"
+        android:title="@string/Add"
         android:icon="@drawable/ic_add_box"
         android:tint="#FFFFFF"
         app:showAsAction="ifRoom"
         />
 
     <item android:id="@+id/profile"
-        android:title="Profile"
+        android:title="@string/profile"
         android:icon="@drawable/ic_person"
         android:tint="#FFFFFF"
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/settings"
-        android:title="Recordings"
+    <item android:id="@+id/recordings"
+        android:title="@string/recordings"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:tint="#FFFFFF"
         app:showAsAction="ifRoom"

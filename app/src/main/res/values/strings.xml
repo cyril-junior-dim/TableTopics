@@ -58,4 +58,8 @@
     <string name="submit">Submit</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="back"><![CDATA[< Back]]></string>
+    <string name="profile">Profile</string>
+    <string name="recordings">Recordings</string>
+    <string name="Add">Add</string>
+    <string name="email_not_verified_n_click_here_to_verify">Email Not Verified!\n Click Here To Verify.</string>
 </resources>

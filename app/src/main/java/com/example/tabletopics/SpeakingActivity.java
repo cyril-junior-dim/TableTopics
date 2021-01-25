@@ -39,7 +39,7 @@ public class SpeakingActivity extends AppCompatActivity{
     private long mTimeLeftInMillis = 30000;
     private long maxTime;
     private long pauseOffset;
-    private boolean running;
+    boolean running;
     private FirebaseFirestore fStore;
     private String theme = "";
     private Random random = new Random();
@@ -59,6 +59,7 @@ public class SpeakingActivity extends AppCompatActivity{
     private ImageButton audio;
     private Button skip, btnCircle;
     //endregion
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

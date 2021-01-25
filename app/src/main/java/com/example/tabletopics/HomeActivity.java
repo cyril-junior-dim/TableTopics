@@ -15,16 +15,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
-    TextView textView;
-    FirebaseAuth fAuth;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,70 +34,48 @@ public class HomeActivity extends AppCompatActivity {
         myToolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(myToolbar);
 
-        textView = findViewById(R.id.notVerified);
-        fAuth = FirebaseAuth.getInstance();
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNav);
 
-        FirebaseUser user = fAuth.getCurrentUser();
-
-        assert user != null;
-        if(user.isEmailVerified()){
-            textView.setVisibility(View.VISIBLE);
-
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Send verification link
-                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(HomeActivity.this, "A verification email has been sent to your mailbox", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG", "onFailure: Email not sent "+ e.getMessage());
-                        }
-                    });
-                }
-            });
-        }
-
-        Button button = findViewById(R.id.goToSpeakNow);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), SpeakNowActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button button2 = findViewById(R.id.goToLeaderboard);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LeaderboardActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button button3 = findViewById(R.id.goToTopicsBank);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), TopicsBankActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button button4 = findViewById(R.id.goToCoaching);
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CoachingActivity.class);
-                startActivity(intent);
-            }
-        });
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new HomeFragment()).commit();
     }
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNav =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @SuppressLint("NonConstantResourceId")
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()){
+                        case R.id.newTopic:
+                            selectedFragment = new HomeFragment();
+                            break;
+
+                        case R.id.statistics:
+                            selectedFragment = new StatsFragment();
+                            break;
+
+                        case R.id.add:
+                            selectedFragment = new AddFragment();
+                            break;
+
+                        case R.id.profile:
+                            selectedFragment = new ProfileFragment();
+                            break;
+
+                        case R.id.recordings:
+                            selectedFragment = new RecordingsFragment();
+                            break;
+                    }
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, selectedFragment).commit();
+
+                    return true;
+                }
+            };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
